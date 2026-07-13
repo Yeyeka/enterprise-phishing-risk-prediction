@@ -1,0 +1,272 @@
+阶段1：数据读取与数据质量检查
+项目根目录: D:\MachineLearning\EnterprisePhishingProject
+原始数据路径: D:\MachineLearning\EnterprisePhishingProject\data\enterprise_phishing_simulation_2026.csv
+结果保存路径: D:\MachineLearning\EnterprisePhishingProject\results\metrics\data_overview.txt
+CSV文件存在: 是
+CSV读取成功: 是
+输出目录自动创建: 否
+
+================================================================================
+1. 数据集规模
+================================================================================
+行数: 100000
+列数: 20
+
+================================================================================
+2. 全部字段名称
+================================================================================
+1. age
+2. department
+3. work_mode
+4. daily_email_count
+5. suspicious_email_frequency
+6. password_length
+7. password_reuse
+8. password_manager_usage
+9. mfa_enabled
+10. cybersecurity_training
+11. phishing_awareness_score
+12. security_quiz_score
+13. link_click_tendency
+14. attachment_open_rate
+15. verification_before_click
+16. reporting_suspicious_email
+17. antivirus_installed
+18. vpn_usage
+19. failed_phishing_simulation
+20. cybersecurity_awareness_score
+
+================================================================================
+3. 字段数据类型
+================================================================================
+age                                int64
+department                           str
+work_mode                            str
+daily_email_count                  int64
+suspicious_email_frequency         int64
+password_length                    int64
+password_reuse                       str
+password_manager_usage               str
+mfa_enabled                          str
+cybersecurity_training               str
+phishing_awareness_score         float64
+security_quiz_score              float64
+link_click_tendency              float64
+attachment_open_rate             float64
+verification_before_click        float64
+reporting_suspicious_email       float64
+antivirus_installed                  str
+vpn_usage                            str
+failed_phishing_simulation           str
+cybersecurity_awareness_score    float64
+
+================================================================================
+4. 非空数量
+================================================================================
+age                              100000
+department                       100000
+work_mode                        100000
+daily_email_count                100000
+suspicious_email_frequency       100000
+password_length                  100000
+password_reuse                   100000
+password_manager_usage            99000
+mfa_enabled                      100000
+cybersecurity_training           100000
+phishing_awareness_score         100000
+security_quiz_score               99000
+link_click_tendency              100000
+attachment_open_rate             100000
+verification_before_click         99000
+reporting_suspicious_email        99000
+antivirus_installed               99000
+vpn_usage                         99000
+failed_phishing_simulation       100000
+cybersecurity_awareness_score    100000
+
+================================================================================
+5. 缺失值数量
+================================================================================
+age                                 0
+department                          0
+work_mode                           0
+daily_email_count                   0
+suspicious_email_frequency          0
+password_length                     0
+password_reuse                      0
+password_manager_usage           1000
+mfa_enabled                         0
+cybersecurity_training              0
+phishing_awareness_score            0
+security_quiz_score              1000
+link_click_tendency                 0
+attachment_open_rate                0
+verification_before_click        1000
+reporting_suspicious_email       1000
+antivirus_installed              1000
+vpn_usage                        1000
+failed_phishing_simulation          0
+cybersecurity_awareness_score       0
+
+================================================================================
+6. 缺失率(%)
+================================================================================
+age                              0.0
+department                       0.0
+work_mode                        0.0
+daily_email_count                0.0
+suspicious_email_frequency       0.0
+password_length                  0.0
+password_reuse                   0.0
+password_manager_usage           1.0
+mfa_enabled                      0.0
+cybersecurity_training           0.0
+phishing_awareness_score         0.0
+security_quiz_score              1.0
+link_click_tendency              0.0
+attachment_open_rate             0.0
+verification_before_click        1.0
+reporting_suspicious_email       1.0
+antivirus_installed              1.0
+vpn_usage                        1.0
+failed_phishing_simulation       0.0
+cybersecurity_awareness_score    0.0
+
+================================================================================
+7. 完全重复记录
+================================================================================
+完全重复记录数量: 0
+
+================================================================================
+8. 目标字段检查
+================================================================================
+目标字段存在: 是
+目标字段: failed_phishing_simulation
+目标字段唯一类别: ['No', 'Yes']
+目标字段类别样本数量:
+failed_phishing_simulation
+No     62686
+Yes    37314
+目标字段类别样本比例(%):
+failed_phishing_simulation
+No     62.69
+Yes    37.31
+目标字段缺失值数量: 0
+目标字段是否存在缺失值: 否
+
+================================================================================
+9. 数值型特征描述性统计
+================================================================================
+数值型字段数量: 11
+                 age  daily_email_count  suspicious_email_frequency  password_length  phishing_awareness_score  security_quiz_score  link_click_tendency  attachment_open_rate  verification_before_click  reporting_suspicious_email  cybersecurity_awareness_score
+count  100000.000000      100000.000000               100000.000000    100000.000000             100000.000000         99000.000000        100000.000000         100000.000000               99000.000000                99000.000000                  100000.000000
+mean       34.177930          76.925920                    9.215660        14.433340                 75.894708            75.426428            35.208244             35.231695                  78.778186                   62.271151                      69.519389
+std         7.895387          27.563074                    7.607143         3.561823                 14.465540            15.407109            12.788664             15.022221                  15.645670                   13.699611                      17.401323
+min        21.000000          19.000000                    0.000000         8.000000                 24.000000            18.300000             0.000000              0.000000                   3.600000                    7.300000                       4.600000
+25%        28.000000          55.000000                    4.000000        11.000000                 65.500000            64.300000            25.600000             24.500000                  67.700000                   53.100000                      57.300000
+50%        34.000000          71.000000                    7.000000        15.000000                 75.000000            75.300000            35.400000             35.300000                  79.300000                   62.600000                      69.700000
+75%        39.000000          99.000000                   12.000000        17.000000                 87.200000            87.600000            44.500000             45.800000                  92.200000                   71.900000                      83.200000
+max        65.000000         250.000000                   79.000000        30.000000                100.000000           100.000000            79.800000             90.800000                 100.000000                  100.000000                     100.000000
+
+================================================================================
+10. 类别型特征
+================================================================================
+类别型字段数量: 9
+类别型字段名称:
+- department
+- work_mode
+- password_reuse
+- password_manager_usage
+- mfa_enabled
+- cybersecurity_training
+- antivirus_installed
+- vpn_usage
+- failed_phishing_simulation
+
+================================================================================
+11. 类别型字段唯一取值数量
+================================================================================
+department                    10
+work_mode                      3
+password_reuse                 2
+password_manager_usage         2
+mfa_enabled                    2
+cybersecurity_training         2
+antivirus_installed            2
+vpn_usage                      2
+failed_phishing_simulation     2
+
+================================================================================
+12. 类别型字段各类别频数
+================================================================================
+
+[department]
+department
+IT                  21872
+Sales               17086
+Engineering         14731
+Customer Support    11966
+Marketing           10483
+Finance              9772
+HR                   8714
+Executive            4291
+Operations            844
+Legal                 241
+
+[work_mode]
+work_mode
+Hybrid    37853
+Office    31322
+Remote    30825
+
+[password_reuse]
+password_reuse
+No     68785
+Yes    31215
+
+[password_manager_usage]
+password_manager_usage
+Yes    63424
+No     35576
+NaN     1000
+
+[mfa_enabled]
+mfa_enabled
+Yes    74944
+No     25056
+
+[cybersecurity_training]
+cybersecurity_training
+Yes    76055
+No     23945
+
+[antivirus_installed]
+antivirus_installed
+Yes    88584
+No     10416
+NaN     1000
+
+[vpn_usage]
+vpn_usage
+Yes    76818
+No     22182
+NaN     1000
+
+[failed_phishing_simulation]
+failed_phishing_simulation
+No     62686
+Yes    37314
+
+================================================================================
+13. 疑似ID、编号或高基数字段检查
+================================================================================
+未发现疑似ID、编号或高基数字段。
+
+================================================================================
+14. 数据质量问题简要总结
+================================================================================
+1. 存在缺失值字段 6 个，缺失值总数 6000。
+2. 未发现完全重复记录。
+3. 目标字段不存在缺失值。
+4. 目标字段类别均在预期范围 Yes/No 内。
+5. 未发现疑似ID、编号或高基数字段。
