@@ -1,0 +1,29 @@
+{
+  "best_cv_accuracy": 0.7738625000000001,
+  "best_cv_f1": 0.7211200738992691,
+  "best_cv_f1_std": 0.004520841504152678,
+  "best_cv_precision": 0.6678847392179238,
+  "best_cv_recall": 0.7835917262862069,
+  "best_cv_roc_auc": 0.857218513923381,
+  "best_params": {
+    "colsample_bytree": 1.0,
+    "gamma": 0.1,
+    "learning_rate": 0.05,
+    "max_depth": 6,
+    "min_child_weight": 1,
+    "n_estimators": 150,
+    "reg_alpha": 0.5,
+    "reg_lambda": 1.0,
+    "scale_pos_weight": 1.68,
+    "subsample": 0.85
+  },
+  "cv_method": "StratifiedKFold(n_splits=5, shuffle=True, random_state=42)",
+  "model": "XGBoost Tuned",
+  "random_state": 42,
+  "raw_feature_count": 18,
+  "selected_feature_set": "reduced",
+  "selection_metric": "mean_test_f1",
+  "total_search_time_seconds": 183.05365390000225,
+  "transformed_feature_count": 35,
+  "xgboost_version": "3.2.0"
+}
