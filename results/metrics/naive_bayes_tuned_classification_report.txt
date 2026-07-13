@@ -1,0 +1,41 @@
+Tuned Gaussian Naive Bayes Classification Report
+================================================================================
+Model: GaussianNB
+Train size: 80000
+Test size: 20000
+Positive class: Yes / 1
+Selected feature set: full
+Feature-set selection basis: Baseline training-CV mean F1 values were very close; selected by higher baseline training-CV mean ROC-AUC.
+Parameter search values: [1e-12, 3e-12, 1e-11, 3e-11, 1e-10, 3e-10, 1e-09, 3e-09, 1e-08, 3e-08, 1e-07, 3e-07, 1e-06]
+Cross-validation: StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+Best var_smoothing: 1e-12
+Best cross-validation metrics:
+Accuracy=0.762625, Precision=0.650360, Recall=0.786875, F1=0.712129, ROC-AUC=0.845753
+Test metrics:
+Accuracy=0.760800, Precision=0.649115, Recall=0.781321, F1=0.709109, ROC-AUC=0.844559
+TN=9385, FP=3152, FN=1632, TP=5831
+
+Full classification_report:
+              precision    recall  f1-score   support
+
+          No     0.8519    0.7486    0.7969     12537
+         Yes     0.6491    0.7813    0.7091      7463
+
+    accuracy                         0.7608     20000
+   macro avg     0.7505    0.7650    0.7530     20000
+weighted avg     0.7762    0.7608    0.7641     20000
+
+
+Baseline vs tuned changes:
+- accuracy: baseline=0.7608, tuned=0.7608, absolute_change=0.0
+- precision: baseline=0.6491149949905377, tuned=0.6491149949905377, absolute_change=0.0
+- recall: baseline=0.7813211845102506, tuned=0.7813211845102506, absolute_change=0.0
+- f1: baseline=0.7091085978353399, tuned=0.7091085978353399, absolute_change=0.0
+- roc_auc: baseline=0.8445587955003586, tuned=0.8445587955003583, absolute_change=-3.3306690738754696e-16
+- tn: baseline=9385.0, tuned=9385.0, absolute_change=0.0
+- fp: baseline=3152.0, tuned=3152.0, absolute_change=0.0
+- fn: baseline=1632.0, tuned=1632.0, absolute_change=0.0
+- tp: baseline=5831.0, tuned=5831.0, absolute_change=0.0
+
+The test set was evaluated only after selecting var_smoothing from training CV.
+No SMOTE, priors tuning, threshold adjustment, or test-set-driven search-space change was used.

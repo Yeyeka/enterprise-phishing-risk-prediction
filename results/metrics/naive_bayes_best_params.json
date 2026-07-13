@@ -1,0 +1,20 @@
+{
+  "model": "Gaussian Naive Bayes Tuned",
+  "selected_feature_set": "full",
+  "raw_feature_count": 19,
+  "transformed_feature_count": 36,
+  "best_params": {
+    "var_smoothing": 1e-12
+  },
+  "best_var_smoothing": 1e-12,
+  "best_cv_accuracy": 0.762625,
+  "best_cv_precision": 0.6503596533994116,
+  "best_cv_recall": 0.7868746512667172,
+  "best_cv_f1": 0.7121285736238068,
+  "best_cv_roc_auc": 0.845753118340102,
+  "best_cv_f1_std": 0.0024332799647685146,
+  "total_search_time_seconds": 34.27450499999395,
+  "cv_method": "StratifiedKFold(n_splits=5, shuffle=True, random_state=42)",
+  "selection_metric": "mean_test_f1",
+  "random_state": 42
+}

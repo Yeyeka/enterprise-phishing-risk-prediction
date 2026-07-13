@@ -1,0 +1,2 @@
+model,selected_feature_set,best_var_smoothing,cv_accuracy_mean,cv_accuracy_std,cv_precision_mean,cv_precision_std,cv_recall_mean,cv_recall_std,cv_f1_mean,cv_f1_std,cv_roc_auc_mean,cv_roc_auc_std,mean_fit_time,total_search_time
+Gaussian Naive Bayes Tuned,full,1e-12,0.762625,0.001656898457962934,0.6503596533994116,0.0017519072741807064,0.7868746512667172,0.004525136372975509,0.7121285736238068,0.0024332799647685146,0.845753118340102,0.0020937613558065127,0.19903793334960937,34.27450499999395
