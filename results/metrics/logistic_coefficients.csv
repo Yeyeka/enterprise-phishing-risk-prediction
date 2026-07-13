@@ -1,0 +1,37 @@
+feature,coefficient,abs_coefficient,direction
+categorical__password_reuse_No,-0.42588116735056997,0.42588116735056997,More likely No
+categorical__password_reuse_Yes,0.389544679212327,0.389544679212327,More likely Yes
+numeric__phishing_awareness_score,-0.37257525446202083,0.37257525446202083,More likely No
+numeric__link_click_tendency,0.31970020168831187,0.31970020168831187,More likely Yes
+categorical__mfa_enabled_Yes,-0.310419263693884,0.310419263693884,More likely No
+numeric__verification_before_click,-0.2945037519643427,0.2945037519643427,More likely No
+categorical__mfa_enabled_No,0.2740827755556411,0.2740827755556411,More likely Yes
+numeric__attachment_open_rate,0.26860174843104384,0.26860174843104384,More likely Yes
+categorical__password_manager_usage_Yes,-0.2224855210540303,0.2224855210540303,More likely No
+categorical__cybersecurity_training_Yes,-0.21439482720311942,0.21439482720311942,More likely No
+categorical__password_manager_usage_No,0.1861490329157862,0.1861490329157862,More likely Yes
+categorical__cybersecurity_training_No,0.17805833906487578,0.17805833906487578,More likely Yes
+categorical__vpn_usage_Yes,-0.1664587680670774,0.1664587680670774,More likely No
+categorical__antivirus_installed_Yes,-0.14591286088956554,0.14591286088956554,More likely No
+categorical__vpn_usage_No,0.13012227992883393,0.13012227992883393,More likely Yes
+numeric__reporting_suspicious_email,-0.12288152446830028,0.12288152446830028,More likely No
+numeric__suspicious_email_frequency,0.11936429172120133,0.11936429172120133,More likely Yes
+categorical__antivirus_installed_No,0.10957637275132251,0.10957637275132251,More likely Yes
+numeric__daily_email_count,0.0857355402633975,0.0857355402633975,More likely Yes
+numeric__password_length,-0.06989427801920532,0.06989427801920532,More likely No
+categorical__department_IT,-0.056520885624689314,0.056520885624689314,More likely No
+categorical__work_mode_Office,-0.04681525555503547,0.04681525555503547,More likely No
+categorical__department_Executive,-0.034895216498261224,0.034895216498261224,More likely No
+categorical__department_Sales,0.02316473779055818,0.02316473779055818,More likely Yes
+categorical__department_Marketing,0.019955256294873703,0.019955256294873703,More likely Yes
+categorical__department_Legal,0.01892942283096341,0.01892942283096341,More likely Yes
+numeric__cybersecurity_awareness_score,0.018434725848071026,0.018434725848071026,More likely Yes
+categorical__department_HR,0.017488601612146444,0.017488601612146444,More likely Yes
+numeric__age,0.016050233642171216,0.016050233642171216,More likely Yes
+categorical__department_Engineering,-0.014340248332454062,0.014340248332454062,More likely No
+categorical__work_mode_Remote,0.011099409956608616,0.011099409956608616,More likely Yes
+categorical__department_Finance,-0.009204330247507098,0.009204330247507098,More likely No
+numeric__security_quiz_score,0.003743914931486642,0.003743914931486642,More likely Yes
+categorical__department_Customer Support,-0.0006778693205920659,0.0006778693205920659,More likely No
+categorical__work_mode_Hybrid,-0.0006206425398161645,0.0006206425398161645,More likely No
+categorical__department_Operations,-0.0002359566432815076,0.0002359566432815076,More likely No
