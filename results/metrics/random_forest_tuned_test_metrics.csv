@@ -1,0 +1,2 @@
+model,selected_feature_set,accuracy,precision,recall,f1,roc_auc,tn,fp,fn,tp
+Random Forest Tuned,full,0.76795,0.6592191378921237,0.7827951226048506,0.7157120980091883,0.8535961585330094,9517,3020,1621,5842

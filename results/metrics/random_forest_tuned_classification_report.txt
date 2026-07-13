@@ -1,0 +1,66 @@
+Tuned Random Forest Classification Report
+================================================================================
+Model: Random Forest Tuned
+Train samples: 80000
+Test samples: 20000
+Positive class: Yes / 1
+Feature set: full, using all 19 raw predictive features
+
+Parameter search range:
+- n_estimators: [200, 300, 500, 700] (number of decision trees in the forest)
+- max_depth: [None, 10, 20, 30, 40] (maximum depth of each decision tree)
+- min_samples_split: [2, 5, 10, 20] (minimum samples required to split an internal node)
+- min_samples_leaf: [1, 2, 4, 8] (minimum samples allowed in a leaf node)
+- max_features: ['sqrt', 'log2', 0.5, 0.8] (number of features considered at each split)
+- bootstrap: [True] (whether bootstrap samples are used)
+- class_weight: [None, 'balanced', 'balanced_subsample'] (class weight strategy for training samples)
+
+Search method:
+- RandomizedSearchCV with 30 random parameter combinations.
+- StratifiedKFold(n_splits=5, shuffle=True, random_state=42).
+- Total CV fits: 150 plus one refit on the full training set.
+- Refit metric: mean CV F1 on the training set.
+- RandomForestClassifier n_jobs=-1; RandomizedSearchCV n_jobs=1.
+- No SMOTE or classification threshold adjustment.
+- Test set was evaluated only after best parameters were selected.
+
+Best parameters:
+{
+  "bootstrap": true,
+  "class_weight": "balanced",
+  "max_depth": 10,
+  "max_features": "log2",
+  "min_samples_leaf": 4,
+  "min_samples_split": 5,
+  "n_estimators": 500
+}
+
+Best CV metrics:
+- Accuracy: 0.772700 +/- 0.002081
+- Precision: 0.665209 +/- 0.001691
+- Recall: 0.786841 +/- 0.006940
+- F1: 0.720920 +/- 0.003511
+- ROC-AUC: 0.856365 +/- 0.003422
+
+Final test metrics:
+- Accuracy: 0.767950
+- Precision: 0.659219
+- Recall: 0.782795
+- F1: 0.715712
+- ROC-AUC: 0.853596
+- TN=9517, FP=3020, FN=1621, TP=5842
+
+Classification report:
+              precision    recall  f1-score   support
+
+          No     0.8545    0.7591    0.8040     12537
+         Yes     0.6592    0.7828    0.7157      7463
+
+    accuracy                         0.7680     20000
+   macro avg     0.7568    0.7710    0.7598     20000
+weighted avg     0.7816    0.7680    0.7710     20000
+
+
+Feature importance note:
+- Random Forest impurity-based importance indicates predictive contribution, not causality.
+- It may be affected by feature cardinality and highly correlated predictors.
