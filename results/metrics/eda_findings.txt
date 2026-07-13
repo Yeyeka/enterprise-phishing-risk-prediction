@@ -1,0 +1,83 @@
+EDA Findings
+================================================================================
+Data shape: 100000 rows, 20 columns.
+
+Target class distribution:
+- No: 62686 samples (62.69%).
+- Yes: 37314 samples (37.31%).
+
+Missing value fields:
+- password_manager_usage: 1000 missing values (1.00%).
+- security_quiz_score: 1000 missing values (1.00%).
+- verification_before_click: 1000 missing values (1.00%).
+- reporting_suspicious_email: 1000 missing values (1.00%).
+- antivirus_installed: 1000 missing values (1.00%).
+- vpn_usage: 1000 missing values (1.00%).
+
+Numeric feature distribution notes:
+- age: mean=34.18, std=7.90, min=21.00, median=34.00, max=65.00.
+- daily_email_count: mean=76.93, std=27.56, min=19.00, median=71.00, max=250.00.
+- suspicious_email_frequency: mean=9.22, std=7.61, min=0.00, median=7.00, max=79.00.
+- password_length: mean=14.43, std=3.56, min=8.00, median=15.00, max=30.00.
+- phishing_awareness_score: mean=75.89, std=14.47, min=24.00, median=75.00, max=100.00.
+- security_quiz_score: mean=75.43, std=15.41, min=18.30, median=75.30, max=100.00.
+- link_click_tendency: mean=35.21, std=12.79, min=0.00, median=35.40, max=79.80.
+- attachment_open_rate: mean=35.23, std=15.02, min=0.00, median=35.30, max=90.80.
+- verification_before_click: mean=78.78, std=15.65, min=3.60, median=79.30, max=100.00.
+- reporting_suspicious_email: mean=62.27, std=13.70, min=7.30, median=62.60, max=100.00.
+- cybersecurity_awareness_score: mean=69.52, std=17.40, min=4.60, median=69.70, max=100.00.
+
+Potential extreme values based on IQR rule:
+- suspicious_email_frequency: 4130 potential outliers (4.13%).
+- age: 979 potential outliers (0.98%).
+- daily_email_count: 500 potential outliers (0.50%).
+- reporting_suspicious_email: 435 potential outliers (0.43%).
+- password_length: 287 potential outliers (0.29%).
+- attachment_open_rate: 164 potential outliers (0.16%).
+- verification_before_click: 132 potential outliers (0.13%).
+- cybersecurity_awareness_score: 128 potential outliers (0.13%).
+- security_quiz_score: 92 potential outliers (0.09%).
+- link_click_tendency: 37 potential outliers (0.04%).
+
+Top absolute Pearson correlations among numeric features:
+- phishing_awareness_score vs cybersecurity_awareness_score: r=0.8973, abs=0.8973.
+- phishing_awareness_score vs security_quiz_score: r=0.8942, abs=0.8942.
+- phishing_awareness_score vs verification_before_click: r=0.8936, abs=0.8936.
+- phishing_awareness_score vs link_click_tendency: r=-0.8614, abs=0.8614.
+- verification_before_click vs cybersecurity_awareness_score: r=0.8589, abs=0.8589.
+- security_quiz_score vs cybersecurity_awareness_score: r=0.8525, abs=0.8525.
+- link_click_tendency vs attachment_open_rate: r=0.8488, abs=0.8488.
+- link_click_tendency vs cybersecurity_awareness_score: r=-0.8283, abs=0.8283.
+- security_quiz_score vs verification_before_click: r=0.8148, abs=0.8148.
+- link_click_tendency vs verification_before_click: r=-0.7969, abs=0.7969.
+
+Categorical feature balance notes:
+- department: 10 categories; most frequent=IT (21872 samples).
+- work_mode: 3 categories; most frequent=Hybrid (37853 samples).
+- password_reuse: 2 categories; most frequent=No (68785 samples).
+- password_manager_usage: 2 categories; most frequent=Yes (63424 samples).
+- mfa_enabled: 2 categories; most frequent=Yes (74944 samples).
+- cybersecurity_training: 2 categories; most frequent=Yes (76055 samples).
+- antivirus_installed: 2 categories; most frequent=Yes (88584 samples).
+- vpn_usage: 2 categories; most frequent=Yes (76818 samples).
+
+Numeric features with clearer target-class mean differences:
+- cybersecurity_awareness_score: Yes mean=57.31, No mean=76.79, standardized difference=1.1195.
+- link_click_tendency: Yes mean=43.95, No mean=30.01, standardized difference=1.0899.
+- phishing_awareness_score: Yes mean=66.11, No mean=81.72, standardized difference=1.0788.
+- verification_before_click: Yes mean=68.36, No mean=84.98, standardized difference=1.0623.
+- security_quiz_score: Yes mean=65.92, No mean=81.09, standardized difference=0.9843.
+
+Categorical features with wider target Yes rate ranges:
+- department: min Yes rate=9.75%, max Yes rate=64.73%, range=54.98 percentage points.
+- cybersecurity_training: min Yes rate=27.93%, max Yes rate=67.12%, range=39.20 percentage points.
+- password_manager_usage: min Yes rate=23.74%, max Yes rate=61.38%, range=37.64 percentage points.
+- password_reuse: min Yes rate=27.83%, max Yes rate=58.21%, range=30.37 percentage points.
+- mfa_enabled: min Yes rate=30.24%, max Yes rate=58.48%, range=28.24 percentage points.
+
+Issues to address in preprocessing stage:
+- Missing values need an explicit strategy fitted without data leakage.
+- Categorical predictors need encoding after data splitting or inside a pipeline.
+- IQR-based potential outliers should be evaluated, but no rows were removed in this EDA stage.
+- Correlated numeric feature pairs should be documented; no feature was removed in this EDA stage.
+- Target imbalance is moderate and should be considered during model evaluation.

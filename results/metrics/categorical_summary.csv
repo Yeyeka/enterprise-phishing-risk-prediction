@@ -1,0 +1,10 @@
+feature,unique_count,missing_count,missing_rate,most_frequent_value,most_frequent_count
+department,10,0,0.0,IT,21872
+work_mode,3,0,0.0,Hybrid,37853
+password_reuse,2,0,0.0,No,68785
+password_manager_usage,2,1000,1.0,Yes,63424
+mfa_enabled,2,0,0.0,Yes,74944
+cybersecurity_training,2,0,0.0,Yes,76055
+antivirus_installed,2,1000,1.0,Yes,88584
+vpn_usage,2,1000,1.0,Yes,76818
+failed_phishing_simulation,2,0,0.0,No,62686
