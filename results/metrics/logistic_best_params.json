@@ -1,0 +1,21 @@
+{
+  "model": "Logistic Regression Tuned",
+  "feature_set": "full",
+  "selection_data": "80% training set only",
+  "cv": {
+    "type": "StratifiedKFold",
+    "n_splits": 5,
+    "shuffle": true,
+    "random_state": 42
+  },
+  "refit": "f1",
+  "best_params": {
+    "C": 0.01,
+    "class_weight": "balanced",
+    "solver": "lbfgs",
+    "penalty": "l2",
+    "max_iter": 2000,
+    "random_state": 42
+  },
+  "best_cv_f1": 0.7221597949982266
+}
