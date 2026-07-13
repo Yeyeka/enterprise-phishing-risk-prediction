@@ -1,0 +1,2 @@
+model,selected_feature_set,accuracy,precision,recall,f1,roc_auc,tn,fp,fn,tp
+Logistic Regression Tuned,full,0.7699,0.6622065993876857,0.7825271338603779,0.7173565900994964,0.8564410139234548,9558,2979,1623,5840

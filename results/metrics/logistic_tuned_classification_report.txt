@@ -1,0 +1,36 @@
+Tuned Logistic Regression Classification Report
+================================================================================
+Model: LogisticRegression(max_iter=2000, solver='lbfgs', penalty='l2', random_state=42)
+Parameter grid: C=[0.001, 0.01, 0.1, 1, 10, 100], class_weight=[None, 'balanced']
+Feature set: full, selected by the prior baseline cross-validation stage.
+Parameter selection used only the 80% training set with 5-fold StratifiedKFold.
+GridSearchCV refit metric: F1
+The test set was evaluated once after best_params_ was selected.
+No SMOTE, threshold adjustment, or test-set-driven parameter change was used.
+Positive class: Yes / 1
+
+Best cross-validation metrics:
+- accuracy: 0.773975 +/- 0.003305
+- precision: 0.667024 +/- 0.003549
+- recall: 0.787243 +/- 0.006159
+- f1: 0.722160 +/- 0.004388
+- roc_auc: 0.858837 +/- 0.003185
+
+Test classification report:
+              precision    recall  f1-score   support
+
+          No     0.8548    0.7624    0.8060     12537
+         Yes     0.6622    0.7825    0.7174      7463
+
+    accuracy                         0.7699     20000
+   macro avg     0.7585    0.7725    0.7617     20000
+weighted avg     0.7830    0.7699    0.7729     20000
+
+
+Test metrics:
+- accuracy: 0.769900 (baseline delta -0.013250)
+- precision: 0.662207 (baseline delta -0.068938)
+- recall: 0.782527 (baseline delta +0.120059)
+- f1: 0.717357 (baseline delta +0.022242)
+- roc_auc: 0.856441 (baseline delta -0.000052)
+- TN=9558, FP=2979, FN=1623, TP=5840
