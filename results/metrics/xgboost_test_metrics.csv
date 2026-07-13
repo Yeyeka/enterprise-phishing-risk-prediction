@@ -1,0 +1,2 @@
+model,selected_feature_set,accuracy,precision,recall,f1,roc_auc,tn,fp,fn,tp
+XGBoost,reduced,0.78205,0.7281011169900059,0.6638081200589575,0.6944697553795472,0.8544263475623344,10687,1850,2509,4954

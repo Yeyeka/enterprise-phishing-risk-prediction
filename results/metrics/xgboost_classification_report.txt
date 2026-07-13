@@ -1,0 +1,61 @@
+XGBoost Baseline Experiment
+================================================================================
+XGBoost version: 3.2.0
+Target column: failed_phishing_simulation
+Positive class: Yes / 1
+Random seed: 42
+Train samples: 80000
+Test samples: 20000
+
+Fixed baseline parameters
+XGBClassifier(
+    n_estimators=200, learning_rate=0.1, max_depth=6,
+    min_child_weight=1, gamma=0.0, subsample=1.0,
+    colsample_bytree=1.0, reg_alpha=0.0, reg_lambda=1.0,
+    objective='binary:logistic', eval_metric='logloss',
+    tree_method='hist', importance_type='gain', random_state=42,
+    n_jobs=-1, verbosity=1
+)
+
+Method
+- CV: StratifiedKFold(n_splits=5, shuffle=True, random_state=42).
+- cross_validate n_jobs=1 and error_score='raise'.
+- XGBClassifier n_jobs=-1.
+- No GridSearchCV, RandomizedSearchCV, manual parameter trials, early stopping, scale_pos_weight, sample_weight, class_weight, SMOTE, or threshold tuning.
+- Test set was evaluated exactly once after selecting the feature set using training CV only.
+
+Cross-validation summary
+- full: accuracy=0.7839 +/- 0.0052, precision=0.7305 +/- 0.0071, recall=0.6669 +/- 0.0080, f1=0.6973 +/- 0.0076, roc_auc=0.8547 +/- 0.0037, fit_time=0.51s +/- 0.06s.
+- reduced: accuracy=0.7845 +/- 0.0051, precision=0.7317 +/- 0.0063, recall=0.6671 +/- 0.0096, f1=0.6979 +/- 0.0079, roc_auc=0.8549 +/- 0.0042, fit_time=0.47s +/- 0.02s.
+
+Selected feature set: reduced
+Selection basis: Selected reduced using training CV only: it ranked first by mean F1 (0.6979); ties would be resolved by ROC-AUC, then Yes-class Recall, then fewer raw features.
+
+Final test metrics
+- Accuracy: 0.7821
+- Precision (Yes): 0.7281
+- Recall (Yes): 0.6638
+- F1-score (Yes): 0.6945
+- ROC-AUC: 0.8544
+- TN=10687, FP=1850, FN=2509, TP=4954
+
+Classification report
+              precision    recall  f1-score   support
+
+          No     0.8099    0.8524    0.8306     12537
+         Yes     0.7281    0.6638    0.6945      7463
+
+    accuracy                         0.7821     20000
+   macro avg     0.7690    0.7581    0.7625     20000
+weighted avg     0.7794    0.7821    0.7798     20000
+
+
+Feature importance notes
+- Gain importance reflects predictive contribution in tree splits.
+- It does not represent strict causality.
+- Highly correlated features may split importance across one another.
+
+Original CSV SHA256 before run: FBA603547D86CBA2D3605F91EC4D4AA37174B5172D32CB07644F0EA9DCC58760
+Original CSV SHA256 after run:  FBA603547D86CBA2D3605F91EC4D4AA37174B5172D32CB07644F0EA9DCC58760
+Original CSV unchanged: True
+Total runtime seconds: 7.47
