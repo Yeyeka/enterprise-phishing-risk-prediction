@@ -1,0 +1,2 @@
+model,selected_feature_set,accuracy,precision,recall,f1,roc_auc,tn,fp,fn,tp
+Gaussian Naive Bayes,full,0.7608,0.6491149949905377,0.7813211845102506,0.7091085978353399,0.8445587955003586,9385,3152,1632,5831

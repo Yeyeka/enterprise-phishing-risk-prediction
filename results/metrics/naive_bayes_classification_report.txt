@@ -1,0 +1,29 @@
+Gaussian Naive Bayes Baseline Classification Report
+================================================================================
+Model parameters: GaussianNB(var_smoothing=1e-9 default).
+Train size: 80000
+Test size: 20000
+Cross-validation: StratifiedKFold(n_splits=5, shuffle=True, random_state=42).
+Feature set CV summary:
+- full: Accuracy=0.7626 +/- 0.0019, Precision=0.6504 +/- 0.0020, Recall=0.7869 +/- 0.0051, F1=0.7121 +/- 0.0027, ROC-AUC=0.8458 +/- 0.0023.
+- reduced: Accuracy=0.7624 +/- 0.0016, Precision=0.6504 +/- 0.0014, Recall=0.7852 +/- 0.0058, F1=0.7115 +/- 0.0028, ROC-AUC=0.8446 +/- 0.0022.
+Selected feature set: full
+Selection basis: Mean F1 values were close, so selected by higher mean ROC-AUC on training 5-fold CV.
+Positive class: Yes / 1
+The test set was evaluated once after selecting the feature set using training CV only.
+This baseline model has not been tuned.
+
+Test classification report:
+              precision    recall  f1-score   support
+
+          No     0.8519    0.7486    0.7969     12537
+         Yes     0.6491    0.7813    0.7091      7463
+
+    accuracy                         0.7608     20000
+   macro avg     0.7505    0.7650    0.7530     20000
+weighted avg     0.7762    0.7608    0.7641     20000
+
+
+Test metrics:
+Accuracy=0.760800, Precision=0.649115, Recall=0.781321, F1=0.709109, ROC-AUC=0.844559
+TN=9385, FP=3152, FN=1632, TP=5831
