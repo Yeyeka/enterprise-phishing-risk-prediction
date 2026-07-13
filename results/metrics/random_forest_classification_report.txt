@@ -1,0 +1,51 @@
+Random Forest Baseline Experiment
+================================================================================
+Target column: failed_phishing_simulation
+Positive class: Yes / 1
+Random seed: 42
+Train samples: 80000
+Test samples: 20000
+
+Method
+- Model: RandomForestClassifier baseline parameters.
+- CV: StratifiedKFold(n_splits=5, shuffle=True, random_state=42).
+- cross_validate n_jobs=1 and error_score='raise'.
+- RandomForestClassifier n_jobs=-1.
+- No GridSearchCV, RandomizedSearchCV, manual parameter trials, SMOTE, class_weight, or threshold tuning.
+- Test set was evaluated exactly once after selecting the feature set using training CV only.
+
+Cross-validation summary
+- full: accuracy=0.7822 +/- 0.0054, precision=0.7290 +/- 0.0073, recall=0.6626 +/- 0.0089, f1=0.6942 +/- 0.0081, roc_auc=0.8519 +/- 0.0038, fit_time=1.51s +/- 0.02s.
+- reduced: accuracy=0.7821 +/- 0.0047, precision=0.7290 +/- 0.0064, recall=0.6622 +/- 0.0079, f1=0.6940 +/- 0.0070, roc_auc=0.8521 +/- 0.0040, fit_time=1.34s +/- 0.02s.
+
+Selected feature set: full
+Selection basis: Selected full because it had the best training CV ranking by mean F1, ROC-AUC, Recall, and then fewer raw features.
+
+Final test metrics
+- Accuracy: 0.7794
+- Precision (Yes): 0.7255
+- Recall (Yes): 0.6578
+- F1-score (Yes): 0.6900
+- ROC-AUC: 0.8506
+- TN=10680, FP=1857, FN=2554, TP=4909
+
+Classification report
+              precision    recall  f1-score   support
+
+          No     0.8070    0.8519    0.8288     12537
+         Yes     0.7255    0.6578    0.6900      7463
+
+    accuracy                         0.7794     20000
+   macro avg     0.7663    0.7548    0.7594     20000
+weighted avg     0.7766    0.7794    0.7770     20000
+
+
+Feature importance notes
+- Importance is the Random Forest impurity-based feature importance.
+- It reflects predictive contribution, not strict causality.
+- Highly correlated features may split importance across one another.
+
+Original CSV SHA256 before run: FBA603547D86CBA2D3605F91EC4D4AA37174B5172D32CB07644F0EA9DCC58760
+Original CSV SHA256 after run:  FBA603547D86CBA2D3605F91EC4D4AA37174B5172D32CB07644F0EA9DCC58760
+Original CSV unchanged: True
+Total runtime seconds: 19.92
