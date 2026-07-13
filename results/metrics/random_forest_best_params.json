@@ -1,0 +1,32 @@
+{
+  "best_bootstrap": true,
+  "best_class_weight": "balanced",
+  "best_cv_accuracy": 0.7727,
+  "best_cv_f1": 0.720920124238794,
+  "best_cv_f1_std": 0.0035107268355105705,
+  "best_cv_precision": 0.6652094642540393,
+  "best_cv_recall": 0.7868412345880579,
+  "best_cv_roc_auc": 0.8563652545074982,
+  "best_max_depth": 10,
+  "best_max_features": "log2",
+  "best_min_samples_leaf": 4,
+  "best_min_samples_split": 5,
+  "best_n_estimators": 500,
+  "best_params": {
+    "bootstrap": true,
+    "class_weight": "balanced",
+    "max_depth": 10,
+    "max_features": "log2",
+    "min_samples_leaf": 4,
+    "min_samples_split": 5,
+    "n_estimators": 500
+  },
+  "cv_method": "StratifiedKFold(n_splits=5, shuffle=True, random_state=42)",
+  "model": "Random Forest Tuned",
+  "random_state": 42,
+  "raw_feature_count": 19,
+  "selected_feature_set": "full",
+  "selection_metric": "mean_test_f1",
+  "total_search_time_seconds": 857.0019959000056,
+  "transformed_feature_count": 36
+}
