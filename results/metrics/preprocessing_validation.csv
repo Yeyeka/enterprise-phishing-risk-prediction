@@ -1,0 +1,7 @@
+preprocessor,feature_set,raw_feature_count,train_rows_before,train_rows_after,test_rows_before,test_rows_after,transformed_feature_count,train_missing_after,test_missing_after,train_infinite_after,test_infinite_after,output_type,estimated_memory_mb,feature_names_available,duplicate_feature_name_count,validation_passed
+linear,full,19,80000,80000,20000,20000,36,0,0,0,0,dense_array,27.46,True,0,True
+linear,reduced,18,80000,80000,20000,20000,35,0,0,0,0,dense_array,26.7,True,0,True
+naive_bayes,full,19,80000,80000,20000,20000,36,0,0,0,0,dense_array,27.46,True,0,True
+naive_bayes,reduced,18,80000,80000,20000,20000,35,0,0,0,0,dense_array,26.7,True,0,True
+tree,full,19,80000,80000,20000,20000,36,0,0,0,0,dense_array,27.46,True,0,True
+tree,reduced,18,80000,80000,20000,20000,35,0,0,0,0,dense_array,26.7,True,0,True

@@ -1,0 +1,134 @@
+Stage 3: Data Preprocessing Design and Dataset Split
+================================================================================
+Original data shape: 100000 rows, 20 columns
+Target mapping: No -> 0, Yes -> 1
+Random seed: 42
+
+Numeric predictive features:
+- age
+- daily_email_count
+- suspicious_email_frequency
+- password_length
+- phishing_awareness_score
+- security_quiz_score
+- link_click_tendency
+- attachment_open_rate
+- verification_before_click
+- reporting_suspicious_email
+- cybersecurity_awareness_score
+
+Categorical predictive features:
+- department
+- work_mode
+- password_reuse
+- password_manager_usage
+- mfa_enabled
+- cybersecurity_training
+- antivirus_installed
+- vpn_usage
+
+Fields with missing values:
+- password_manager_usage: 1000 (1.00%)
+- security_quiz_score: 1000 (1.00%)
+- verification_before_click: 1000 (1.00%)
+- reporting_suspicious_email: 1000 (1.00%)
+- antivirus_installed: 1000 (1.00%)
+- vpn_usage: 1000 (1.00%)
+
+Column checks:
+- Constant columns: None
+- Near-constant columns: None
+- High-cardinality categorical columns: None
+- Suspected ID columns: None
+
+Feature set A - full feature set: 19 features
+- age
+- department
+- work_mode
+- daily_email_count
+- suspicious_email_frequency
+- password_length
+- password_reuse
+- password_manager_usage
+- mfa_enabled
+- cybersecurity_training
+- phishing_awareness_score
+- security_quiz_score
+- link_click_tendency
+- attachment_open_rate
+- verification_before_click
+- reporting_suspicious_email
+- antivirus_installed
+- vpn_usage
+- cybersecurity_awareness_score
+
+Feature set B - reduced feature set: 18 features
+Excluded feature: cybersecurity_awareness_score
+- age
+- department
+- work_mode
+- daily_email_count
+- suspicious_email_frequency
+- password_length
+- password_reuse
+- password_manager_usage
+- mfa_enabled
+- cybersecurity_training
+- phishing_awareness_score
+- security_quiz_score
+- link_click_tendency
+- attachment_open_rate
+- verification_before_click
+- reporting_suspicious_email
+- antivirus_installed
+- vpn_usage
+
+Dataset split:
+- Train samples: 80000
+- Test samples: 20000
+- Train/test index overlap count: 0
+- Same train indices for both feature sets: True
+- Same test indices for both feature sets: True
+
+Train target distribution:
+- No (0): 50149 (62.69%)
+- Yes (1): 29851 (37.31%)
+
+Test target distribution:
+- No (0): 12537 (62.68%)
+- Yes (1): 7463 (37.32%)
+
+Preprocessor design:
+- Linear models: numeric median imputation + StandardScaler; categorical most-frequent imputation + OneHotEncoder(handle_unknown='ignore').
+- Gaussian Naive Bayes: numeric median imputation + StandardScaler; categorical most-frequent imputation + dense OneHotEncoder(handle_unknown='ignore'); ColumnTransformer uses sparse_threshold=0.0.
+- Tree models: numeric median imputation only; categorical most-frequent imputation + OneHotEncoder(handle_unknown='ignore').
+
+Feature engineering scope:
+- Target binary mapping: No -> 0, Yes -> 1.
+- Numeric missing values are handled with median imputation inside preprocessing pipelines.
+- Categorical missing values are handled with most-frequent imputation inside preprocessing pipelines.
+- Categorical predictors are one-hot encoded with handle_unknown='ignore'.
+- Linear and GaussianNB preprocessing standardizes numeric features; tree preprocessing does not standardize numeric features.
+- Two raw feature sets are maintained: full features and a reduced feature set excluding cybersecurity_awareness_score.
+- No additional interaction or composite features are created because the source data already contains multiple behavior and awareness scores, several score fields are highly correlated, ad-hoc combinations could add redundancy, and later feature importance plus ablation testing is a cleaner way to judge feature value.
+- IQR-based potential outliers are not removed because their rates are low and may reflect plausible employee behavior differences.
+- SMOTE is not used because the positive class proportion is 37.31%, which is not severe class imbalance.
+
+Preprocessor validation results:
+- linear / full: raw_features=19, train_shape=(80000, 36), test_shape=(20000, 36), output_type=dense_array, missing_after train/test=0/0, infinite_after train/test=0/0, estimated_memory_mb=27.46, feature_names_available=True, duplicate_feature_names=0, validation_passed=True.
+- linear / reduced: raw_features=18, train_shape=(80000, 35), test_shape=(20000, 35), output_type=dense_array, missing_after train/test=0/0, infinite_after train/test=0/0, estimated_memory_mb=26.70, feature_names_available=True, duplicate_feature_names=0, validation_passed=True.
+- naive_bayes / full: raw_features=19, train_shape=(80000, 36), test_shape=(20000, 36), output_type=dense_array, missing_after train/test=0/0, infinite_after train/test=0/0, estimated_memory_mb=27.46, feature_names_available=True, duplicate_feature_names=0, validation_passed=True.
+- naive_bayes / reduced: raw_features=18, train_shape=(80000, 35), test_shape=(20000, 35), output_type=dense_array, missing_after train/test=0/0, infinite_after train/test=0/0, estimated_memory_mb=26.70, feature_names_available=True, duplicate_feature_names=0, validation_passed=True.
+- tree / full: raw_features=19, train_shape=(80000, 36), test_shape=(20000, 36), output_type=dense_array, missing_after train/test=0/0, infinite_after train/test=0/0, estimated_memory_mb=27.46, feature_names_available=True, duplicate_feature_names=0, validation_passed=True.
+- tree / reduced: raw_features=18, train_shape=(80000, 35), test_shape=(20000, 35), output_type=dense_array, missing_after train/test=0/0, infinite_after train/test=0/0, estimated_memory_mb=26.70, feature_names_available=True, duplicate_feature_names=0, validation_passed=True.
+- All six preprocessing validations passed: True
+- GaussianNB dense output estimated memory: full=27.46 MB, reduced=26.70 MB.
+
+Data leakage prevention:
+- This script never fits an imputer, scaler, or encoder on the full dataset.
+- Validation calls fit_transform only on X_train and transform only on X_test.
+- Fitted validation preprocessors are not saved.
+- Future model training should keep preprocessors inside model Pipelines fitted on training folds only.
+- Train/test split is performed before any future preprocessing fit.
+- The test set is not used for fill values, feature selection, parameter tuning, or scaling statistics.
+- The original CSV is read-only in this stage and is not modified.
