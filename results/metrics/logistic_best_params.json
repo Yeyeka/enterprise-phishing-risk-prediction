@@ -18,5 +18,7 @@
     "max_iter": 2000,
     "random_state": 42
   },
-  "best_cv_f1": 0.7222685794234783
+  "best_cv_f1": 0.7222685794234783,
+  "total_search_time_seconds": 20.159033100004308,
+  "total_runtime_seconds": 21.845037799997954
 }

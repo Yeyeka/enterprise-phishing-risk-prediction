@@ -283,10 +283,10 @@ def collect_results():
             "fp": tuned["fp"],
             "fn": tuned["fn"],
             "tp": tuned["tp"],
-            "total_search_time_seconds": safe_json_get(
-                best_json,
-                ["total_search_time_seconds"],
-                safe_get(summary, ["total_search_time"], "not_recorded"),
+            "total_search_time_seconds": safe_get(
+                summary,
+                ["total_search_time_seconds", "total_search_time"],
+                safe_json_get(best_json, ["total_search_time_seconds"], "not_recorded"),
             ),
         }
         tuned_rows.append(add_derived_metrics(cv_row))
