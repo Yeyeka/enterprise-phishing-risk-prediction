@@ -2,20 +2,20 @@ Logistic Regression Baseline Classification Report
 ================================================================================
 Train size: 80000
 Test size: 20000
-Selected feature set: full
-Selection basis: Mean F1 difference was very small, so ROC-AUC and Recall on training 5-fold CV were used as tie-breakers.
+Selected feature set: reduced
+Selection basis: Mean F1, ROC-AUC, and Yes-class Recall were all within practical tie tolerances on training 5-fold CV; selected the feature set with fewer raw features (reduced).
 The test set was evaluated once after selecting the feature set using training CV only.
 Positive class: Yes / 1
 
               precision    recall  f1-score   support
 
-          No     0.8097    0.8550    0.8317     12537
-         Yes     0.7311    0.6625    0.6951      7463
+          No     0.8100    0.8548    0.8318     12537
+         Yes     0.7311    0.6631    0.6955      7463
 
-    accuracy                         0.7832     20000
-   macro avg     0.7704    0.7587    0.7634     20000
-weighted avg     0.7804    0.7832    0.7808     20000
+    accuracy                         0.7833     20000
+   macro avg     0.7706    0.7590    0.7636     20000
+weighted avg     0.7806    0.7833    0.7809     20000
 
 
 Confusion matrix values:
-TN=10719, FP=1818, FN=2519, TP=4944
+TN=10717, FP=1820, FN=2514, TP=4949
