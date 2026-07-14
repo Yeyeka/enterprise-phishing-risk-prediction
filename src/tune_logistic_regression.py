@@ -11,6 +11,7 @@ import matplotlib
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "phishing_ml_matplotlib_cache"))
 matplotlib.use("Agg")
 
+import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -43,9 +44,10 @@ from data_preprocessing import (
 
 MODEL_NAME = "Logistic Regression Tuned"
 BASELINE_MODEL_NAME = "Logistic Regression"
-SELECTED_FEATURE_SET = "full"
+SELECTED_FEATURE_SET = "reduced"
 METRICS_DIR = Path("results") / "metrics"
 FIGURES_DIR = Path("results") / "figures"
+MODELS_DIR = Path("models")
 DPI = 150
 
 
@@ -56,9 +58,11 @@ def get_project_root():
 def ensure_output_dirs(project_root):
     metrics_dir = project_root / METRICS_DIR
     figures_dir = project_root / FIGURES_DIR
+    models_dir = project_root / MODELS_DIR
     metrics_dir.mkdir(parents=True, exist_ok=True)
     figures_dir.mkdir(parents=True, exist_ok=True)
-    return metrics_dir, figures_dir
+    models_dir.mkdir(parents=True, exist_ok=True)
+    return metrics_dir, figures_dir, models_dir
 
 
 def make_pipeline(numeric_features, categorical_features):
@@ -131,6 +135,7 @@ def clean_cv_results(grid_search):
     cleaned = results[keep_columns].copy()
     cleaned.insert(0, "model", MODEL_NAME)
     cleaned.insert(1, "feature_set", SELECTED_FEATURE_SET)
+    cleaned.insert(2, "selected_feature_set", SELECTED_FEATURE_SET)
     cleaned = cleaned.rename(
         columns={
             "param_model__C": "C",
@@ -153,6 +158,7 @@ def make_tuning_summary(grid_search, cv_results, raw_feature_count, transformed_
             {
                 "model": MODEL_NAME,
                 "feature_set": SELECTED_FEATURE_SET,
+                "selected_feature_set": SELECTED_FEATURE_SET,
                 "raw_feature_count": raw_feature_count,
                 "transformed_feature_count": transformed_feature_count,
                 "best_C": best_params["model__C"],
@@ -182,6 +188,7 @@ def save_best_params(path, grid_search):
     best_params = {
         "model": MODEL_NAME,
         "feature_set": SELECTED_FEATURE_SET,
+        "selected_feature_set": SELECTED_FEATURE_SET,
         "selection_data": "80% training set only",
         "cv": {
             "type": "StratifiedKFold",
@@ -245,7 +252,7 @@ def save_classification_report(path, report, metrics, summary, baseline_metrics)
     lines.append("=" * 80)
     lines.append("Model: LogisticRegression(max_iter=2000, solver='lbfgs', penalty='l2', random_state=42)")
     lines.append("Parameter grid: C=[0.001, 0.01, 0.1, 1, 10, 100], class_weight=[None, 'balanced']")
-    lines.append("Feature set: full, selected by the prior baseline cross-validation stage.")
+    lines.append(f"Feature set: {SELECTED_FEATURE_SET}, selected by the prior baseline cross-validation stage.")
     lines.append("Parameter selection used only the 80% training set with 5-fold StratifiedKFold.")
     lines.append("GridSearchCV refit metric: F1")
     lines.append("The test set was evaluated once after best_params_ was selected.")
@@ -360,7 +367,7 @@ def validate_outputs(cv_results, summary, metrics, predictions):
 def main():
     start_time = time.perf_counter()
     project_root = get_project_root()
-    metrics_dir, figures_dir = ensure_output_dirs(project_root)
+    metrics_dir, figures_dir, models_dir = ensure_output_dirs(project_root)
 
     baseline_path = metrics_dir / "logistic_test_metrics.csv"
     if not baseline_path.exists():
@@ -439,6 +446,10 @@ def main():
         selected_split["y_test"],
         y_proba,
         metrics["roc_auc"],
+    )
+    joblib.dump(
+        grid_search.best_estimator_,
+        models_dir / "logistic_regression_tuned.joblib",
     )
 
     elapsed_time = time.perf_counter() - start_time

@@ -1,6 +1,7 @@
 {
   "model": "Logistic Regression Tuned",
-  "feature_set": "full",
+  "feature_set": "reduced",
+  "selected_feature_set": "reduced",
   "selection_data": "80% training set only",
   "cv": {
     "type": "StratifiedKFold",
@@ -10,12 +11,12 @@
   },
   "refit": "f1",
   "best_params": {
-    "C": 0.01,
+    "C": 1,
     "class_weight": "balanced",
     "solver": "lbfgs",
     "penalty": "l2",
     "max_iter": 2000,
     "random_state": 42
   },
-  "best_cv_f1": 0.7221597949982266
+  "best_cv_f1": 0.7222685794234783
 }

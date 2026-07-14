@@ -46,6 +46,8 @@ METRICS_DIR = Path("results") / "metrics"
 FIGURES_DIR = Path("results") / "figures"
 DPI = 150
 F1_TIE_THRESHOLD = 0.001
+ROC_AUC_TIE_THRESHOLD = 0.0005
+RECALL_TIE_THRESHOLD = 0.001
 
 
 def get_project_root():
@@ -168,17 +170,40 @@ def choose_feature_set(cv_summary):
         selected = "full" if full_row["f1_mean"] > reduced_row["f1_mean"] else "reduced"
         reason = (
             f"Selected by higher mean F1 on training 5-fold CV. "
-            f"F1 difference={f1_difference:.6f}."
+            f"F1 difference={f1_difference:.6f}, tolerance={F1_TIE_THRESHOLD:.6f}."
         )
-    else:
-        comparison_columns = ["roc_auc_mean", "recall_mean", "f1_mean"]
-        full_values = tuple(full_row[column] for column in comparison_columns)
-        reduced_values = tuple(reduced_row[column] for column in comparison_columns)
-        selected = "full" if full_values >= reduced_values else "reduced"
+        return selected, reason
+
+    roc_auc_difference = abs(full_row["roc_auc_mean"] - reduced_row["roc_auc_mean"])
+    if roc_auc_difference > ROC_AUC_TIE_THRESHOLD:
+        selected = "full" if full_row["roc_auc_mean"] > reduced_row["roc_auc_mean"] else "reduced"
         reason = (
-            "Mean F1 difference was very small, so ROC-AUC and Recall on training "
-            "5-fold CV were used as tie-breakers."
+            "Mean F1 values were practically tied, so selected by higher ROC-AUC "
+            f"on training 5-fold CV. ROC-AUC difference={roc_auc_difference:.6f}, "
+            f"tolerance={ROC_AUC_TIE_THRESHOLD:.6f}."
         )
+        return selected, reason
+
+    recall_difference = abs(full_row["recall_mean"] - reduced_row["recall_mean"])
+    if recall_difference > RECALL_TIE_THRESHOLD:
+        selected = "full" if full_row["recall_mean"] > reduced_row["recall_mean"] else "reduced"
+        reason = (
+            "Mean F1 and ROC-AUC values were practically tied, so selected by higher "
+            f"Yes-class Recall on training 5-fold CV. Recall difference={recall_difference:.6f}, "
+            f"tolerance={RECALL_TIE_THRESHOLD:.6f}."
+        )
+        return selected, reason
+
+    selected = (
+        "full"
+        if full_row["raw_feature_count"] < reduced_row["raw_feature_count"]
+        else "reduced"
+    )
+    reason = (
+        "Mean F1, ROC-AUC, and Yes-class Recall were all within practical tie "
+        "tolerances on training 5-fold CV; selected the feature set with fewer raw "
+        f"features ({selected})."
+    )
 
     return selected, reason
 
