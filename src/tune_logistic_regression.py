@@ -148,7 +148,14 @@ def clean_cv_results(grid_search):
     return cleaned.sort_values("rank_test_f1").reset_index(drop=True)
 
 
-def make_tuning_summary(grid_search, cv_results, raw_feature_count, transformed_feature_count):
+def make_tuning_summary(
+    grid_search,
+    cv_results,
+    raw_feature_count,
+    transformed_feature_count,
+    total_search_time_seconds,
+    total_runtime_seconds,
+):
     best_index = grid_search.best_index_
     raw_results = pd.DataFrame(grid_search.cv_results_)
     best_row = raw_results.loc[best_index]
@@ -177,6 +184,8 @@ def make_tuning_summary(grid_search, cv_results, raw_feature_count, transformed_
                 "roc_auc_std": best_row["std_test_roc_auc"],
                 "fit_time_mean": best_row["mean_fit_time"],
                 "score_time_mean": best_row["mean_score_time"],
+                "total_search_time_seconds": float(total_search_time_seconds),
+                "total_runtime_seconds": float(total_runtime_seconds),
                 "grid_search_refit_metric": grid_search.refit,
                 "parameter_combination_count": len(cv_results),
             }
@@ -184,7 +193,7 @@ def make_tuning_summary(grid_search, cv_results, raw_feature_count, transformed_
     )
 
 
-def save_best_params(path, grid_search):
+def save_best_params(path, grid_search, total_search_time_seconds, total_runtime_seconds):
     best_params = {
         "model": MODEL_NAME,
         "feature_set": SELECTED_FEATURE_SET,
@@ -206,6 +215,8 @@ def save_best_params(path, grid_search):
             "random_state": RANDOM_SEED,
         },
         "best_cv_f1": grid_search.best_score_,
+        "total_search_time_seconds": float(total_search_time_seconds),
+        "total_runtime_seconds": float(total_runtime_seconds),
     }
     path.write_text(json.dumps(best_params, indent=2), encoding="utf-8")
 
@@ -397,32 +408,34 @@ def main():
     print(f"Feature set: {SELECTED_FEATURE_SET}")
     print("Parameter combinations: 12")
     convergence_warnings = []
+    search_start_time = time.perf_counter()
     with warnings.catch_warnings(record=True) as caught_warnings:
         warnings.simplefilter("always", ConvergenceWarning)
         grid_search.fit(selected_split["X_train"], selected_split["y_train"])
         convergence_warnings = [
             warning for warning in caught_warnings if issubclass(warning.category, ConvergenceWarning)
         ]
+    total_search_time_seconds = float(time.perf_counter() - search_start_time)
     print("Completed Logistic Regression GridSearchCV.")
 
     cv_results = clean_cv_results(grid_search)
     transformed_feature_count = len(
         grid_search.best_estimator_.named_steps["preprocessor"].get_feature_names_out()
     )
-    summary = make_tuning_summary(
+    report_summary = make_tuning_summary(
         grid_search,
         cv_results,
         raw_feature_count=len(selected_features),
         transformed_feature_count=transformed_feature_count,
+        total_search_time_seconds=0.0,
+        total_runtime_seconds=0.0,
     )
     metrics, report, predictions, y_pred, y_proba = evaluate_on_test(
         grid_search.best_estimator_, selected_split
     )
-    validate_outputs(cv_results, summary, metrics, predictions)
+    validate_outputs(cv_results, report_summary, metrics, predictions)
 
     cv_results.to_csv(metrics_dir / "logistic_tuning_cv_results.csv", index=False, encoding="utf-8")
-    save_best_params(metrics_dir / "logistic_best_params.json", grid_search)
-    summary.to_csv(metrics_dir / "logistic_tuning_summary.csv", index=False, encoding="utf-8")
     pd.DataFrame([metrics]).to_csv(
         metrics_dir / "logistic_tuned_test_metrics.csv", index=False, encoding="utf-8"
     )
@@ -430,7 +443,7 @@ def main():
         metrics_dir / "logistic_tuned_classification_report.txt",
         report,
         metrics,
-        summary,
+        report_summary,
         baseline_metrics,
     )
     predictions.to_csv(
@@ -452,7 +465,25 @@ def main():
         models_dir / "logistic_regression_tuned.joblib",
     )
 
-    elapsed_time = time.perf_counter() - start_time
+    # total_runtime_seconds intentionally excludes only the final tiny metadata writes
+    # for logistic_tuning_summary.csv and logistic_best_params.json.
+    total_runtime_seconds = float(time.perf_counter() - start_time)
+    summary = make_tuning_summary(
+        grid_search,
+        cv_results,
+        raw_feature_count=len(selected_features),
+        transformed_feature_count=transformed_feature_count,
+        total_search_time_seconds=total_search_time_seconds,
+        total_runtime_seconds=total_runtime_seconds,
+    )
+    summary.to_csv(metrics_dir / "logistic_tuning_summary.csv", index=False, encoding="utf-8")
+    save_best_params(
+        metrics_dir / "logistic_best_params.json",
+        grid_search,
+        total_search_time_seconds,
+        total_runtime_seconds,
+    )
+
     best_params = grid_search.best_params_
     print(f"Best params: C={best_params['model__C']}, class_weight={best_params['model__class_weight']}")
     print("Best CV metrics:")
@@ -470,7 +501,8 @@ def main():
         f"FN={metrics['fn']}, TP={metrics['tp']}"
     )
     print(f"Convergence warnings: {len(convergence_warnings)}")
-    print(f"Total runtime seconds: {elapsed_time:.2f}")
+    print(f"Grid search time seconds: {total_search_time_seconds:.6f}")
+    print(f"Total runtime seconds: {total_runtime_seconds:.6f}")
     _ = y_pred
     return 0
 
